@@ -1,0 +1,6 @@
+C:\Users\karol\source\repos\Pizza_AspNetMvc5\Pizza_AspNetMvc5.Data\obj\Debug\Pizza_AspNetMvc5.Data.csproj.AssemblyReference.cache
+C:\Users\karol\source\repos\Pizza_AspNetMvc5\Pizza_AspNetMvc5.Data\obj\Debug\Pizza_AspNetMvc5.Data.csproj.CoreCompileInputs.cache
+C:\Users\karol\source\repos\Pizza_AspNetMvc5\Pizza_AspNetMvc5.Data\bin\Debug\Pizza_AspNetMvc5.Data.dll
+C:\Users\karol\source\repos\Pizza_AspNetMvc5\Pizza_AspNetMvc5.Data\bin\Debug\Pizza_AspNetMvc5.Data.pdb
+C:\Users\karol\source\repos\Pizza_AspNetMvc5\Pizza_AspNetMvc5.Data\obj\Debug\Pizza_AspNetMvc5.Data.dll
+C:\Users\karol\source\repos\Pizza_AspNetMvc5\Pizza_AspNetMvc5.Data\obj\Debug\Pizza_AspNetMvc5.Data.pdb
