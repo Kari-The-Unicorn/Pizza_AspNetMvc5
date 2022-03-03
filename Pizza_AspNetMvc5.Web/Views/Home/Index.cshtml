@@ -1,33 +1,32 @@
-﻿@model IEnumerable<Pizza_AspNetMvc5.Data.Models.Pizzeria>
+﻿@model IEnumerable<Pizza_AspNetMvc5.Data.Pizzeria>
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Home";
 }
-
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">Header</h1>
-        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+<div class="jumbotron jumbotron-fluid" style="background: url(Content/Images/bg.jpg) no-repeat center center fixed; background-size: cover;">
+    <div class="container mx-auto bg-success" style="width: 800px;">
+        <h2 class="display-4">Best Pizza</h2>
+        <p class="lead">Southern smash green tea lime chai tea banana seitan chili pepper walnut mushroom tart pao pepper vine tomatoes
+        tempeh blueberry chia seed jam crumbled salty cozy.</p>
     </div>
 </div>
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Title</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="card">
+    <div class="card-body">
+        <a href="@Url.Action("Index", "Pizzerias")">
+            <img src='@Url.Content("~/Content/Images/deal.png")' class="img-fluid img-thumbnail" />
+        </a>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="category-list-card">
+        <div class="category-name">
+            <h3>
+                There are @Model.Count() pizzas. See
+                <button type="button" class="btn btn-outline-info">@Html.ActionLink("All", "Index", "Pizzerias")</button>
+            </h3>
         </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <div class="right-arrow-div">
+            <i class="fa fa-angle-right"></i>
         </div>
     </div>
+</div>

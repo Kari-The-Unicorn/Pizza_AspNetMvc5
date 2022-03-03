@@ -1,7 +1,6 @@
-﻿using Pizza_AspNetMvc5.Data.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Pizza_AspNetMvc5.Data
+namespace Pizza_AspNetMvc5.Data.Services
 {
     public interface IPizzeriaData
     {

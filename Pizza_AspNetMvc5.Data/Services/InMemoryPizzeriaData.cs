@@ -1,8 +1,7 @@
-﻿using Pizza_AspNetMvc5.Data.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Pizza_AspNetMvc5.Data
+namespace Pizza_AspNetMvc5.Data.Services
 {
     public class InMemoryPizzeriaData : IPizzeriaData
     {
@@ -12,9 +11,9 @@ namespace Pizza_AspNetMvc5.Data
         {
             pizzerias = new List<Pizzeria>()
             {
-                new Pizzeria {Id = 1, Name = "Pap Johns", Location = "London"},
-                new Pizzeria {Id = 2, Name = "Domin Pizza", Location = "Bahamas"},
-                new Pizzeria {Id = 3, Name = "Margerit Pizzeria", Location = "Tenerife"}
+                new Pizzeria {Id = 1, Name = "Pap Johns", Location = "London", Type = PizzaType.American},
+                new Pizzeria {Id = 2, Name = "Domin Pizza", Location = "Bahamas", Type= PizzaType.American},
+                new Pizzeria {Id = 3, Name = "Margerit Pizzeria", Location = "Tenerife", Type= PizzaType.Turkish}
             };
         }
 

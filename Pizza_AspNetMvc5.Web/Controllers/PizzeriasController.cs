@@ -1,9 +1,5 @@
 ﻿using Pizza_AspNetMvc5.Data;
-using Pizza_AspNetMvc5.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Pizza_AspNetMvc5.Data.Services;
 using System.Web.Mvc;
 
 namespace Pizza_AspNetMvc5.Web.Controllers
@@ -11,6 +7,7 @@ namespace Pizza_AspNetMvc5.Web.Controllers
     public class PizzeriasController : Controller
     {
         private readonly IPizzeriaData db;
+
         public PizzeriasController(IPizzeriaData db)
         {
             this.db = db;

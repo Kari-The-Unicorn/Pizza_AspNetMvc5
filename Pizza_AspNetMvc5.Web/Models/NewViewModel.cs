@@ -1,7 +1,7 @@
-﻿using Pizza_AspNetMvc5.Data.Models;
+﻿using Pizza_AspNetMvc5.Data;
 using System.Collections.Generic;
 
-namespace Pizza_AspNetMvc5.Web
+namespace Pizza_AspNetMvc5.Web.Models
 {
     public class NewViewModel
     {

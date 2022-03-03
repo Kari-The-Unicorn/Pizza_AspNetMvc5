@@ -1,7 +1,7 @@
-﻿using Pizza_AspNetMvc5.Data;
+﻿using Pizza_AspNetMvc5.Data.Services;
 using System.Web.Mvc;
 
-namespace Pizza_AspNetMvc5.Web
+namespace Pizza_AspNetMvc5.Web.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,13 +1,13 @@
-﻿@model IEnumerable<Pizza_AspNetMvc5.Data.Models.Pizzeria>
+﻿@model IEnumerable<Pizza_AspNetMvc5.Data.Pizzeria>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New", "Create")
 </p>
 <table class="table">
     <tr>
@@ -16,6 +16,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
         </th>
         <th></th>
     </tr>
@@ -28,6 +31,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Location)
         </td>
+        <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
