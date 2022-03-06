@@ -1,4 +1,4 @@
-﻿@model Pizza_AspNetMvc5.Data.Models.Pizzeria
+﻿@model Pizza_AspNetMvc5.Data.Pizzeria
 
 @{
     ViewBag.Title = "Details";
@@ -26,6 +26,13 @@
             @Html.DisplayFor(model => model.Location)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
     </dl>
 </div>
 <p>
