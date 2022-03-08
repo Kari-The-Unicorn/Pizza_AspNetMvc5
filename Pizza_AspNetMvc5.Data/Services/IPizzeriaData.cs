@@ -7,5 +7,7 @@ namespace Pizza_AspNetMvc5.Data.Services
         IEnumerable<Pizzeria> GetAll();
         Pizzeria GetDetails(int id);
         void Add(Pizzeria pizzeria);
+        void Update(Pizzeria pizzeria);
+        void RemovePizzeria(Pizzeria pizzeria);
     }
 }

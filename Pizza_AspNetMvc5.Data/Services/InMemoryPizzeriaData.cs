@@ -23,6 +23,23 @@ namespace Pizza_AspNetMvc5.Data.Services
             pizzeria.Id = pizzerias.Count + 1;
         }
 
+        public void Update(Pizzeria pizzeria)
+        {
+            var current = GetDetails(pizzeria.Id);
+            if (current != null)
+            {
+                current.Name = pizzeria.Name;
+                current.Location = pizzeria.Location;
+                current.Type = pizzeria.Type;
+            }
+        }
+
+        public void RemovePizzeria(Pizzeria pizzeria)
+        {
+            pizzerias.Remove(pizzeria);
+            //pizzeria.Id = pizzerias.Count - 1;
+        }
+
         public IEnumerable<Pizzeria> GetAll()
         {
             return pizzerias.OrderBy(prop => prop.Name);
