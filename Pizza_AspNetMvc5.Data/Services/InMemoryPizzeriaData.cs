@@ -37,7 +37,7 @@ namespace Pizza_AspNetMvc5.Data.Services
         public void RemovePizzeria(Pizzeria pizzeria)
         {
             pizzerias.Remove(pizzeria);
-            //pizzeria.Id = pizzerias.Count - 1;
+            pizzeria.Id = pizzerias.Count - 1;
         }
 
         public IEnumerable<Pizzeria> GetAll()

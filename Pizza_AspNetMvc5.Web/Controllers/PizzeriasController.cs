@@ -78,21 +78,38 @@ namespace Pizza_AspNetMvc5.Web.Controllers
             if (ModelState.IsValid)
             {
                 db.Update(pizzeria);
+                TempData["Message"] = "Successfully updated pizzeria!";
                 return RedirectToAction("Details", new { id = pizzeria.Id });
             }
             return View(pizzeria);
         }
 
         [HttpGet]
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
-            return View();
+            var model = db.GetDetails(id);
+
+            if (model == null)
+            {
+                // return HttpNotFound();
+                return View("Empty");
+            }
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult Delete(Pizzeria pizzeria)
         {
-            db.RemovePizzeria(pizzeria);
+            //db.RemovePizzeria(pizzeria);
+            //return View(pizzeria);
+            var model = db.GetDetails(pizzeria.Id);
+
+            if (model != null)
+            {
+                db.RemovePizzeria(model);
+                TempData["Message"] = "Successfully deleted one pizzeria!";
+                return RedirectToAction("Index", "Pizzerias");
+            }
             return View(pizzeria);
         }
     }

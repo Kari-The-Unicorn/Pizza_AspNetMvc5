@@ -217,6 +217,7 @@
     <Content Include="Views\Pizzerias\Index.cshtml" />
     <Content Include="Views\Pizzerias\Delete.cshtml" />
     <Content Include="Views\Pizzerias\Edit.cshtml" />
+    <Content Include="Views\Pizzerias\_Pizzeria.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
