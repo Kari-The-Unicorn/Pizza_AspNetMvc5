@@ -1,5 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using System;
 using Xunit;
 
 namespace Pizza_AspNetMvc5.UITests
@@ -19,10 +21,14 @@ namespace Pizza_AspNetMvc5.UITests
 			using (IWebDriver driver = new ChromeDriver())
 			{
 				driver.Navigate().GoToUrl(HomeUrl);
-				TestHelper.Pause();
+				// TestHelper.Pause();
+				// IWebElement seeAllPizzeriasLink = driver.FindElement(By.Name("SeeAllPizzerias"));
 
-				IWebElement seeAllPizzeriasLink = driver.FindElement(By.Name("SeeAllPizzerias"));
+				// Better option (waits until 1 sec but it's not fixed time, proceeds when element loaded before that time):
+				WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
+				IWebElement seeAllPizzeriasLink = wait.Until((d)=> d.FindElement(By.Name("SeeAllPizzerias")));
 				seeAllPizzeriasLink.Click();
+
 				TestHelper.Pause();
 
 				Assert.Equal(PizzeriasTitle, driver.Title); 
@@ -56,6 +62,23 @@ namespace Pizza_AspNetMvc5.UITests
 				TestHelper.Pause();
 
 				IWebElement createNewPizzeriaLink = driver.FindElement(By.LinkText("Add New"));
+				createNewPizzeriaLink.Click();
+				TestHelper.Pause();
+
+				Assert.Equal(CreateNewTitle, driver.Title);
+				Assert.Equal($"{PizzeriasUrl}{CreateNewUri}", driver.Url);
+			}
+		}
+
+		[Fact]
+		public void SeeCreateNewPizzeriaFromPizzeriasPage_UsingXPath()
+		{
+			using (IWebDriver driver = new ChromeDriver())
+			{
+				driver.Navigate().GoToUrl(PizzeriasUrl);
+				TestHelper.Pause();
+
+				IWebElement createNewPizzeriaLink = driver.FindElement(By.XPath("//p/a[contains(text(),'Add New')]"));
 				createNewPizzeriaLink.Click();
 				TestHelper.Pause();
 
