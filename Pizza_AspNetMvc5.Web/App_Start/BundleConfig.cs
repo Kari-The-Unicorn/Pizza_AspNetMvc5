@@ -24,6 +24,12 @@ namespace Pizza_AspNetMvc5.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            // Custom scripts
+            bundles.Add(new ScriptBundle("~/bundles/custom").Include(
+                      "~/Scripts/custom/cookies.js"));
+            bundles.Add(new StyleBundle("~/Content/custom").Include(
+                     "~/Content/custom/custom.css"));
         }
     }
 }

@@ -6,41 +6,51 @@
     <title>@ViewBag.Title - My Pizzerias App</title>
     <link rel="icon" type="image/ico" href="Content/Images/favicon.ico" />
     @Styles.Render("~/Content/css")
+	@Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top container navbar-custom" style="background-color: red;">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a id="allPizzeriasLogo" href="@Url.Action("Index", "Pizzerias")">
-                    <img src='@Url.Content("~/Content/Images/logo.png")' style="background-color: white; width: 40px; height: 50px"  />
-                </a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Pizzerias", "Index", "Pizzerias")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container body-content">
-        @if(TempData["Message"] != null)
-			{
-                <div class="alert alert-info">
-                    @TempData["Message"]
-                </div>
-			}
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My Pizzerias App</p>
-            @RenderSection("footer", required: false)
-        </footer>
-    </div>
+	<!-- Cookie Banner -->
+	<div id="cb-cookie-banner" class="alert alert-dark text-center mb-0" role="alert">
+		This website uses cookies to provide you with the best experience when visiting our website.
+		<button type="button" class="btn btn-primary btn-sm ms-3" onclick="window.hideCookieBanner()">
+			Ok, I got it
+		</button>
+	</div>
+	<!-- End of Cookie Banner -->
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top container navbar-custom" style="background-color: red;">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a id="allPizzeriasLogo" href="@Url.Action("Index", "Pizzerias")">
+					<img src='@Url.Content("~/Content/Images/logo.png")' style="background-color: white; width: 40px; height: 50px" />
+				</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+				<li>@Html.ActionLink("Pizzerias", "Index", "Pizzerias")</li>
+				<li>@Html.ActionLink("About", "About", "Home")</li>
+				<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container body-content">
+		@if (TempData["Message"] != null)
+		{
+			<div class="alert alert-info">
+				@TempData["Message"]
+			</div>
+		}
+		@RenderBody()
+		<hr />
+		<footer>
+			<p>&copy; @DateTime.Now.Year - My Pizzerias App</p>
+			@RenderSection("footer", required: false)
+		</footer>
+	</div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/custom")
+	@RenderSection("scripts", required: false)
 </body>
 </html>
