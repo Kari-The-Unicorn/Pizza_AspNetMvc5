@@ -1,6 +1,11 @@
 ﻿using System;
+using System.IO;
+using ApprovalTests;
+using ApprovalTests.Reporters;
+using ApprovalTests.Reporters.Windows;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Html5;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using Xunit;
@@ -150,6 +155,52 @@ namespace Pizza_AspNetMvc5.UITests
 				alert.Dismiss();
 
 				Assert.Equal(ContactUrl, driver.Url);
+			}
+		}
+
+		// If sets and deletes cookie
+		[Fact]
+		public void NotDisplayCookieMessage()
+		{
+			using (IWebDriver driver = new ChromeDriver())
+			{
+				driver.Navigate().GoToUrl(HomeUrl);
+				IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+				js.ExecuteScript("document.cookie = 'isCookieAccepted=yes'");
+				driver.Navigate().Refresh();
+				// Minimize browser window to prevent from accidential clicks
+				driver.Manage().Window.Minimize();
+				Cookie cookiesValue = driver.Manage().Cookies.GetCookieNamed("isCookieAccepted");
+
+				Assert.Equal("yes", cookiesValue.Value);
+
+				driver.Manage().Cookies.DeleteCookieNamed("isCookieAccepted");
+				driver.Navigate().Refresh();
+
+				Assert.NotNull(driver.FindElements(By.XPath("//div[@id='cookie-banner']")));
+			}
+		}
+
+		// If renders page (takes screenshot of page) and checks if screenshot matches approved file
+		// You need to add ApprovalTests in nuget package reference
+		[UseReporter(typeof(BeyondCompareReporter))]
+		[Fact]
+		public void RenderContactPage()
+		{
+			using (IWebDriver driver = new ChromeDriver())
+			{
+				driver.Navigate().GoToUrl(ContactUrl);
+				ITakesScreenshot screenshotDriver = (ITakesScreenshot)driver;
+				Screenshot screenshot = screenshotDriver.GetScreenshot();
+				screenshot.SaveAsFile("contactPage.bmp", ScreenshotImageFormat.Bmp);
+
+				FileInfo file = new FileInfo("contactPage.bmp");
+
+				Approvals.Verify(file);
+				// When fails with error message:
+				// ApprovalTests.Core.Exceptions.ApprovalMissingException : Failed Approval: Approval File not found
+				// copy "contactPage.bmp" file from Pizza...UITests -> bin -> Debug to Pizza...UITests and
+				// change it's name to Pizza_WebAppShould.RenderContactPage.approved.bmp
 			}
 		}
 	}
