@@ -6,6 +6,7 @@ using ApprovalTests.Reporters.Windows;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Html5;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using Xunit;
@@ -18,6 +19,8 @@ namespace Pizza_AspNetMvc5.UITests
 		private const string HomeUrl = "https://localhost:44303/";
 		private const string AboutUrl = "https://localhost:44303/Home/About";
 		private const string ContactUrl = "https://localhost:44303/Home/Contact";
+		private const string PizzeriasUrl = "https://localhost:44303/Pizzerias";
+		private const string CreateUrl = "https://localhost:44303/Pizzerias/Create";
 		private const string HomeTitle = "Home - My Pizzerias App";
 
 		// If loads without error
@@ -201,6 +204,25 @@ namespace Pizza_AspNetMvc5.UITests
 				// ApprovalTests.Core.Exceptions.ApprovalMissingException : Failed Approval: Approval File not found
 				// copy "contactPage.bmp" file from Pizza...UITests -> bin -> Debug to Pizza...UITests and
 				// change it's name to Pizza_WebAppShould.RenderContactPage.approved.bmp
+			}
+		}
+
+		// Actions, more:
+		// https://www.selenium.dev/selenium/docs/api/dotnet/html/T_OpenQA_Selenium_Interactions_Actions.htm
+		[Fact]
+		public void RenderAboutPageWithActions()
+		{
+			using (IWebDriver driver = new ChromeDriver())
+			{
+				driver.Navigate().GoToUrl(PizzeriasUrl);
+				IWebElement aboutUsLink = driver.FindElement(By.XPath("//a[contains(@href,'Create')]"));
+
+				Actions actions = new Actions(driver);
+				actions.MoveToElement(aboutUsLink);
+				actions.Click();
+				actions.Perform();
+
+				Assert.Equal(CreateUrl, driver.Url);
 			}
 		}
 	}
