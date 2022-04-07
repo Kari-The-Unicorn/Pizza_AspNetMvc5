@@ -1,7 +1,13 @@
 ﻿@{
-    ViewBag.Title = "About";
+	ViewBag.Title = "About";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
 <p>Use this area to provide additional information.</p>
+
+<div>
+	<a id="ContactUs" href="#" onclick="if (window.confirm('Do you want to contact us?')) { window.open('Contact')}">Contact us</a>
+</div>
+
+@Html.Partial("_Overlay")
