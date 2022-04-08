@@ -120,7 +120,7 @@ namespace Pizza_AspNetMvc5.UITests
 		{
 			using (IWebDriver driver = new ChromeDriver())
 			{
-				driver.Navigate().GoToUrl(AboutUrl);
+				driver.Navigate().GoToUrl(ContactUrl);
 				// Minimize browser window to prevent from accidential clicks
 				driver.Manage().Window.Minimize();
 				TestHelper.Pause();
