@@ -51,10 +51,9 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 				driver.Manage().Window.Minimize();
 				TestHelper.Pause();
 
-				homePage.AllPizzeriasLinkClick();
+				ApplicationPage applicationPage = homePage.AllPizzeriasLinkClick();
 
-				Assert.Equal(PizzeriasTitle, driver.Title);
-				Assert.Equal(PizzeriasUrl, driver.Url);
+				applicationPage.EnsureHomePageLoaded();
 			}
 		}
 

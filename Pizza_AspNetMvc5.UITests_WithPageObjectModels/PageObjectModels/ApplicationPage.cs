@@ -6,17 +6,13 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 	public class ApplicationPage
 	{
 		private readonly IWebDriver Driver;
-		private const string HomeUrl = "https://localhost:44303/";
-		private const string HomeTitle = "Home - My Pizzerias App";
+		private const string HomeUrl = "https://localhost:44303/Pizzerias";
+		private const string HomeTitle = "Index - My Pizzerias App";
 
 		public ApplicationPage(IWebDriver driver)
 		{
 			Driver = driver;
 		}
-
-		// public string exampleToken => Driver.FindElement(By.XPath("exampleXpath")).Text;
-		// public bool isCookieMessagePreent => Driver.FindElement(By.XPath("exampleXpath")).Any();
-		public void AllPizzeriasLinkClick() => Driver.FindElement(By.Id("allPizzeriasLogo")).Click();
 
 		public void NativateToHome()
 		{

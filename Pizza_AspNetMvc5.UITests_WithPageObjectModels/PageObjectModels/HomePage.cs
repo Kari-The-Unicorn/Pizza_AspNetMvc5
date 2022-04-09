@@ -16,7 +16,11 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 
 		// public string exampleToken => Driver.FindElement(By.XPath("exampleXpath")).Text;
 		// public bool isCookieMessagePreent => Driver.FindElement(By.XPath("exampleXpath")).Any();
-		public void AllPizzeriasLinkClick() => Driver.FindElement(By.Id("allPizzeriasLogo")).Click();
+		public ApplicationPage AllPizzeriasLinkClick()
+		{
+			Driver.FindElement(By.Id("allPizzeriasLogo")).Click();
+			return new ApplicationPage(Driver);
+		}
 
 		public void NativateToHome()
 		{
