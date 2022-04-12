@@ -10,11 +10,14 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 	[Trait("Category", "Applications")]
 	public class Pizza_ApplicationShould
 	{
+		private const string HomeUrl = "https://localhost:44303/";
 		private const string PizzeriasUrl = "https://localhost:44303/Pizzerias";
 		private const string CreateNewUrl = "https://localhost:44303/Pizzerias/Create";
 		private const string DetailsOfNewUrl = "https://localhost:44303/Pizzerias/Details";
+		private const string HomeTitle = "Home - My Pizzerias App";
 		private const string PizzeriasTitle = "Index - My Pizzerias App";
 		private const string CreateNewTitle = "Create - My Pizzerias App";
+		private const string DetailsOfNewTitle = "Details - My Pizzerias App";
 
 		[Fact]
 		public void SeeAllPizzeriasFromHomePage()
@@ -22,7 +25,7 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 			using (IWebDriver driver = new ChromeDriver())
 			{
 				HomePage homePage = new HomePage(driver);
-				homePage.NativateToHome();
+				homePage.NavigateTo(HomeUrl, HomeTitle);
 				// Minimize browser window to prevent from accidential clicks
 				driver.Manage().Window.Minimize();
 				// TestHelper.Pause();
@@ -46,14 +49,14 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 			using (IWebDriver driver = new ChromeDriver())
 			{
 				HomePage homePage = new HomePage(driver);
-				homePage.NativateToHome();
+				homePage.NavigateTo(HomeUrl, HomeTitle);
 				// Minimize browser window to prevent from accidential clicks
 				driver.Manage().Window.Minimize();
 				TestHelper.Pause();
 
 				ApplicationPage applicationPage = homePage.AllPizzeriasLinkClick();
 
-				applicationPage.EnsureHomePageLoaded();
+				applicationPage.EnsureHomePageLoaded(PizzeriasTitle);
 			}
 		}
 
@@ -102,32 +105,17 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 
 			using (IWebDriver driver = new ChromeDriver())
 			{
-				driver.Navigate().GoToUrl(CreateNewUrl);
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				TestHelper.Pause();
+				ApplicationPage homePage = new ApplicationPage(driver);
+				homePage.NavigateTo(CreateNewUrl, CreateNewTitle);
 
-				IWebElement createNewName = driver.FindElement(By.XPath("//input[@id='Name']"));
-				// createNewName.Text = "Pizzeria"; can't be done because it's readonly so it can be done this way:
-				createNewName.SendKeys(newName);
-				TestHelper.Pause();
+				homePage.EnterName(newName);
+				homePage.EnterLocation("La Mano");
+				homePage.EnterType("Turkish");
 
-				IWebElement createNewLocation = driver.FindElement(By.Id("Location"));
-				createNewLocation.SendKeys("La Mano");
-				TestHelper.Pause();
+				ApplicationCompletePage applicationCompletePage = homePage.CreateNew();
 
-				// Select from dropdown list (enums)
-				IWebElement createNewTypeSelect = driver.FindElement(By.Id("Type"));
-				SelectElement createNewType = new SelectElement(createNewTypeSelect);
-				createNewType.SelectByText("Turkish");
-				TestHelper.Pause();
+				applicationCompletePage.EnsureHomePageLoaded(DetailsOfNewTitle);
 
-				IWebElement createNewSubmit = driver.FindElement(By.XPath("//input[@value='Create']"));
-				createNewSubmit.Click();
-				TestHelper.Pause();
-
-				Assert.StartsWith("Details - My Pizzerias App", driver.Title);
-				Assert.StartsWith(DetailsOfNewUrl, driver.Url);
 				Assert.Equal($"Details for {newName}", driver.FindElement(By.TagName("h2")).Text);
 				Assert.Equal($"{newName}", driver.FindElement(By.XPath("(//dt/following-sibling::dd)[1]")).Text);
 				Assert.Equal("La Mano", driver.FindElement(By.XPath("(//dt/following-sibling::dd)[2]")).Text);

@@ -157,7 +157,7 @@ namespace Pizza_AspNetMvc5.UITests
 				// Simultes user clicking Cancel
 				alert.Dismiss();
 
-				Assert.Equal(ContactUrl, driver.Url);
+				Assert.StartsWith(ContactUrl, driver.Url);
 			}
 		}
 

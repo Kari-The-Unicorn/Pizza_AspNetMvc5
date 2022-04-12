@@ -4,7 +4,7 @@ using System;
 
 namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 {
-	public class ApplicationPage
+	public class ApplicationCompletePage
 	{
 		private readonly IWebDriver Driver;
 		private const string HomeUrl = "https://localhost:44303/Pizzerias";
@@ -12,7 +12,7 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 		private const string HomeTitle = "Index - My Pizzerias App";
 		private const string CreateNewTitle = "Create - My Pizzerias App";
 
-		public ApplicationPage(IWebDriver driver)
+		public ApplicationCompletePage(IWebDriver driver)
 		{
 			Driver = driver;
 		}
@@ -28,11 +28,7 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 			createNewType.SelectByText($"{type}");
 		}
 
-		public ApplicationCompletePage CreateNew()
-		{
-			Driver.FindElement(By.XPath("//input[@value='Create']")).Click();
-			return new ApplicationCompletePage(Driver);
-		}
+		public void CreateNew() => Driver.FindElement(By.XPath("//input[@value='Create']")).Click();
 
 		public void NavigateTo(string url, string title)
 		{

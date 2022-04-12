@@ -22,13 +22,13 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 			return new ApplicationPage(Driver);
 		}
 
-		public void NativateToHome()
+		public void NavigateTo(string url, string title)
 		{
-			Driver.Navigate().GoToUrl(HomeUrl);
-			EnsureHomePageLoaded();
+			Driver.Navigate().GoToUrl(url);
+			EnsureHomePageLoaded(title);
 		}
 
-		public void EnsureHomePageLoaded(bool onlyCheckUrlStartsWithExpectedText = true)
+		public void EnsureHomePageLoaded(string title, bool onlyCheckUrlStartsWithExpectedText = true)
 		{
 			bool isUrlCorrect;
 
@@ -41,7 +41,7 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 				isUrlCorrect = Driver.Url == HomeUrl;
 			}
 
-			bool pageHasLoaded = isUrlCorrect && (Driver.Title == HomeTitle);
+			bool pageHasLoaded = isUrlCorrect && (Driver.Title == title);
 
 			if (!pageHasLoaded)
 			{

@@ -19,6 +19,7 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 		private const string ContactUrl = "https://localhost:44303/Home/Contact";
 		private const string PizzeriasUrl = "https://localhost:44303/Pizzerias";
 		private const string CreateUrl = "https://localhost:44303/Pizzerias/Create";
+		private const string PizzeriasTitle = "Index - My Pizzerias App";
 		// private const string HomeTitle = "Home - My Pizzerias App";
 
 		// If loads without error
@@ -28,7 +29,7 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 			using (IWebDriver driver = new ChromeDriver())
 			{
 				HomePage homePage = new HomePage(driver);
-				homePage.NativateToHome();
+				homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
 			}
 		}
 
@@ -39,7 +40,7 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 			using (IWebDriver driver = new ChromeDriver())
 			{
 				HomePage homePage = new HomePage(driver);
-				homePage.NativateToHome();
+				homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
 				// Minimize browser window to prevent from accidential clicks
 				driver.Manage().Window.Minimize();
 				TestHelper.Pause();
@@ -66,7 +67,7 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 				TestHelper.Pause();
 
 				HomePage homePage = new HomePage(driver);
-				homePage.NativateToHome();
+				homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
 				// Minimize browser window to prevent from accidential clicks
 				driver.Manage().Window.Minimize();
 				TestHelper.Pause();
@@ -138,7 +139,7 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 			using (IWebDriver driver = new ChromeDriver())
 			{
 				HomePage homePage = new HomePage(driver);
-				homePage.NativateToHome();
+				homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
 				IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
 				js.ExecuteScript("document.cookie = 'isCookieAccepted=yes'");
 				driver.Navigate().Refresh();
