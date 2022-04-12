@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 {
@@ -16,6 +18,20 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 		{
 			Driver = driver;
 		}
+
+		public ReadOnlyCollection<string> ValidationErrorMessages
+		{
+			get
+			{
+				return Driver.FindElements(
+					By.XPath("//span[contains(@id,'error')]"))
+					.Select(x => x.Text)
+					.ToList()
+					.AsReadOnly();
+			}
+		}
+
+		public void ClearLocation() => Driver.FindElement(By.Id("Location")).Clear();
 
 		public void EnterName(string name) => Driver.FindElement(By.XPath("//input[@id='Name']")).SendKeys(name);
 

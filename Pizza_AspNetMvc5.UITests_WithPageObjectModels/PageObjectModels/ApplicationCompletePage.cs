@@ -17,9 +17,13 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 			Driver = driver;
 		}
 
-		public void EnterName(string name) => Driver.FindElement(By.XPath("//input[@id='Name']")).SendKeys(name);
+		public string MainName => Driver.FindElement(By.TagName("h2")).Text;
 
-		public void EnterLocation(string location) => Driver.FindElement(By.Id("Location")).SendKeys(location);
+		public string Name => Driver.FindElement(By.XPath("(//dt/following-sibling::dd)[1]")).Text;
+
+		public string Location => Driver.FindElement(By.XPath("(//dt/following-sibling::dd)[2]")).Text;
+
+		public string Type => Driver.FindElement(By.XPath("(//dt/following-sibling::dd)[3]")).Text;
 
 		public void EnterType(string type)
 		{

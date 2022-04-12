@@ -1,7 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels;
@@ -13,7 +12,7 @@ using Xunit;
 namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 {
 	[Trait("Category", "Smoke")]
-	public class Pizza_WebAppShould
+	public class Pizza_WebAppShould : IClassFixture<ChromeDriverFixture>
 	{
 		private const string AboutUrl = "https://localhost:44303/Home/About";
 		private const string ContactUrl = "https://localhost:44303/Home/Contact";
@@ -22,138 +21,129 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 		private const string PizzeriasTitle = "Index - My Pizzerias App";
 		// private const string HomeTitle = "Home - My Pizzerias App";
 
+		private readonly ChromeDriverFixture ChromeDriverFixture;
+
+		public Pizza_WebAppShould(ChromeDriverFixture chromeDriverFixture)
+		{
+			ChromeDriverFixture = chromeDriverFixture;
+			ChromeDriverFixture.Driver.Manage().Cookies.DeleteAllCookies();
+			ChromeDriverFixture.Driver.Navigate().GoToUrl("about:blank");
+		}
+
 		// If loads without error
 		[Fact]
 		public void LoadHomePage()
 		{
-			using (IWebDriver driver = new ChromeDriver())
-			{
-				HomePage homePage = new HomePage(driver);
-				homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
-			}
+			HomePage homePage = new HomePage(ChromeDriverFixture.Driver);
+			homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
 		}
 
 		// If reloads home page when going to different url and clicking back
 		[Fact]
 		public void ReloadHomePageOnBack()
 		{
-			using (IWebDriver driver = new ChromeDriver())
-			{
-				HomePage homePage = new HomePage(driver);
-				homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				TestHelper.Pause();
-				driver.Navigate().GoToUrl(AboutUrl);
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				TestHelper.Pause();
-				driver.Navigate().Back();
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				TestHelper.Pause();
-			}
+			HomePage homePage = new HomePage(ChromeDriverFixture.Driver);
+			homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
+			ChromeDriverFixture.Driver.Navigate().GoToUrl(AboutUrl);
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
+			ChromeDriverFixture.Driver.Navigate().Back();
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
 		}
 
 		// If reloads home page when going to different url, then home and after that clicking back and then forward
 		[Fact]
 		public void ReloadHomePageOnForward()
 		{
-			using (IWebDriver driver = new ChromeDriver())
-			{
-				driver.Navigate().GoToUrl(AboutUrl);
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				TestHelper.Pause();
+			ChromeDriverFixture.Driver.Navigate().GoToUrl(AboutUrl);
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
 
-				HomePage homePage = new HomePage(driver);
-				homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				TestHelper.Pause();
+			HomePage homePage = new HomePage(ChromeDriverFixture.Driver);
+			homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
 
-				driver.Navigate().Back();
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				TestHelper.Pause();
+			ChromeDriverFixture.Driver.Navigate().Back();
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
 
-				driver.Navigate().Forward();
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				TestHelper.Pause();
-			}
+			ChromeDriverFixture.Driver.Navigate().Forward();
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
 		}
 
 		// If opens live chat pop-up
 		[Fact]
 		public void AlertIfLiveChatClosed()
 		{
-			using (IWebDriver driver = new ChromeDriver())
-			{
-				driver.Navigate().GoToUrl(ContactUrl);
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				TestHelper.Pause();
+			ChromeDriverFixture.Driver.Navigate().GoToUrl(ContactUrl);
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
 
-				driver.FindElement(By.Id("LiveChat")).Click();
-				WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
-				// Open Live Chat pop-up
-				//IAlert alert = driver.SwitchTo().Alert();
-				IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
+			ChromeDriverFixture.Driver.FindElement(By.Id("LiveChat")).Click();
+			WebDriverWait wait = new WebDriverWait(ChromeDriverFixture.Driver, TimeSpan.FromSeconds(2));
+			// Open Live Chat pop-up
+			//IAlert alert = driver.SwitchTo().Alert();
+			IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
 
-				Assert.Equal("Live chat is currently not available.", alert.Text);
+			Assert.Equal("Live chat is currently not available.", alert.Text);
 
-				TestHelper.Pause();
-				// Simultes user clicking OK
-				alert.Accept();
-				TestHelper.Pause();
-			}
+			TestHelper.Pause();
+			// Simultes user clicking OK
+			alert.Accept();
+			TestHelper.Pause();
 		}
 
 		// If not navigates to about us url when cancel is clicked
 		[Fact]
 		public void NotNavigateToAboutUsWhenCancelClicked()
 		{
-			using (IWebDriver driver = new ChromeDriver())
-			{
-				driver.Navigate().GoToUrl(ContactUrl);
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				Assert.Equal(ContactUrl, driver.Url);
-				driver.FindElement(By.Id("LearnAboutUs")).Click();
-				TestHelper.Pause();
-				WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
-				// Open Learn About Us pop-up
-				IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
-				// Simultes user clicking Cancel
-				alert.Dismiss();
+			ChromeDriverFixture.Driver.Navigate().GoToUrl(ContactUrl);
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			Assert.Equal(ContactUrl, ChromeDriverFixture.Driver.Url);
+			ChromeDriverFixture.Driver.FindElement(By.Id("LearnAboutUs")).Click();
+			TestHelper.Pause();
+			WebDriverWait wait = new WebDriverWait(ChromeDriverFixture.Driver, TimeSpan.FromSeconds(2));
+			// Open Learn About Us pop-up
+			IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
+			// Simultes user clicking Cancel
+			alert.Dismiss();
 
-				Assert.StartsWith(ContactUrl, driver.Url);
-			}
+			Assert.StartsWith(ContactUrl, ChromeDriverFixture.Driver.Url);
 		}
 
 		// If sets and deletes cookie
 		[Fact]
 		public void NotDisplayCookieMessage()
 		{
-			using (IWebDriver driver = new ChromeDriver())
-			{
-				HomePage homePage = new HomePage(driver);
-				homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
-				IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-				js.ExecuteScript("document.cookie = 'isCookieAccepted=yes'");
-				driver.Navigate().Refresh();
-				// Minimize browser window to prevent from accidential clicks
-				driver.Manage().Window.Minimize();
-				Cookie cookiesValue = driver.Manage().Cookies.GetCookieNamed("isCookieAccepted");
+			HomePage homePage = new HomePage(ChromeDriverFixture.Driver);
+			homePage.NavigateTo(PizzeriasUrl, PizzeriasTitle);
+			IJavaScriptExecutor js = (IJavaScriptExecutor)ChromeDriverFixture.Driver;
+			js.ExecuteScript("document.cookie = 'isCookieAccepted=yes'");
+			ChromeDriverFixture.Driver.Navigate().Refresh();
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			Cookie cookiesValue = ChromeDriverFixture.Driver.Manage().Cookies.GetCookieNamed("isCookieAccepted");
 
-				Assert.Equal("yes", cookiesValue.Value);
+			Assert.Equal("yes", cookiesValue.Value);
 
-				driver.Manage().Cookies.DeleteCookieNamed("isCookieAccepted");
-				driver.Navigate().Refresh();
+			ChromeDriverFixture.Driver.Manage().Cookies.DeleteCookieNamed("isCookieAccepted");
+			ChromeDriverFixture.Driver.Navigate().Refresh();
 
-				Assert.NotNull(driver.FindElements(By.XPath("//div[@id='cookie-banner']")));
-			}
+			Assert.NotNull(ChromeDriverFixture.Driver.FindElements(By.XPath("//div[@id='cookie-banner']")));
 		}
 
 		// If renders page (takes screenshot of page) and checks if screenshot matches approved file
@@ -162,21 +152,18 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 		[Fact]
 		public void RenderContactPage()
 		{
-			using (IWebDriver driver = new ChromeDriver())
-			{
-				driver.Navigate().GoToUrl(ContactUrl);
-				ITakesScreenshot screenshotDriver = (ITakesScreenshot)driver;
-				Screenshot screenshot = screenshotDriver.GetScreenshot();
-				screenshot.SaveAsFile("contactPage.bmp", ScreenshotImageFormat.Bmp);
+			ChromeDriverFixture.Driver.Navigate().GoToUrl(ContactUrl);
+			ITakesScreenshot screenshotDriver = (ITakesScreenshot)ChromeDriverFixture.Driver;
+			Screenshot screenshot = screenshotDriver.GetScreenshot();
+			screenshot.SaveAsFile("contactPage.bmp", ScreenshotImageFormat.Bmp);
 
-				FileInfo file = new FileInfo("contactPage.bmp");
+			FileInfo file = new FileInfo("contactPage.bmp");
 
-				Approvals.Verify(file);
-				// When fails with error message:
-				// ApprovalTests.Core.Exceptions.ApprovalMissingException : Failed Approval: Approval File not found
-				// copy "contactPage.bmp" file from Pizza...UITests -> bin -> Debug to Pizza...UITests and
-				// change it's name to Pizza_WebAppShould.RenderContactPage.approved.bmp
-			}
+			Approvals.Verify(file);
+			// When fails with error message:
+			// ApprovalTests.Core.Exceptions.ApprovalMissingException : Failed Approval: Approval File not found
+			// copy "contactPage.bmp" file from Pizza...UITests -> bin -> Debug to Pizza...UITests and
+			// change it's name to Pizza_WebAppShould.RenderContactPage.approved.bmp
 		}
 
 		// Actions, more:
@@ -184,18 +171,15 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 		[Fact]
 		public void RenderAboutPageWithActions()
 		{
-			using (IWebDriver driver = new ChromeDriver())
-			{
-				driver.Navigate().GoToUrl(PizzeriasUrl);
-				IWebElement aboutUsLink = driver.FindElement(By.XPath("//a[contains(@href,'Create')]"));
+			ChromeDriverFixture.Driver.Navigate().GoToUrl(PizzeriasUrl);
+			IWebElement aboutUsLink = ChromeDriverFixture.Driver.FindElement(By.XPath("//a[contains(@href,'Create')]"));
 
-				Actions actions = new Actions(driver);
-				actions.MoveToElement(aboutUsLink);
-				actions.Click();
-				actions.Perform();
+			Actions actions = new Actions(ChromeDriverFixture.Driver);
+			actions.MoveToElement(aboutUsLink);
+			actions.Click();
+			actions.Perform();
 
-				Assert.Equal(CreateUrl, driver.Url);
-			}
+			Assert.Equal(CreateUrl, ChromeDriverFixture.Driver.Url);
 		}
 	}
 }

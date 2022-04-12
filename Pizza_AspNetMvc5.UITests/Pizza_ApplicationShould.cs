@@ -15,7 +15,7 @@ namespace Pizza_AspNetMvc5.UITests
 		private const string DetailsOfNewUrl = "https://localhost:44303/Pizzerias/Details";
 		private const string PizzeriasTitle = "Index - My Pizzerias App";
 		private const string CreateNewTitle = "Create - My Pizzerias App";
-
+		
 		[Fact]
 		public void SeeAllPizzeriasFromHomePage()
 		{
