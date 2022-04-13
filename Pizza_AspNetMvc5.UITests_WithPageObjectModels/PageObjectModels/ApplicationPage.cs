@@ -6,18 +6,15 @@ using System.Linq;
 
 namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 {
-	public class ApplicationPage
+	public class ApplicationPage : Page
 	{
-		private readonly IWebDriver Driver;
-		private const string HomeUrl = "https://localhost:44303/Pizzerias";
-		private const string CreateNewUrl = "https://localhost:44303/Pizzerias/Create";
-		private const string HomeTitle = "Index - My Pizzerias App";
-		private const string CreateNewTitle = "Create - My Pizzerias App";
-
 		public ApplicationPage(IWebDriver driver)
 		{
 			Driver = driver;
 		}
+
+		protected override string PageUrl => "https://localhost:44303/Pizzerias";
+		protected override string PageTitle => "Index - My Pizzerias App";
 
 		public ReadOnlyCollection<string> ValidationErrorMessages
 		{
@@ -62,11 +59,11 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 
 			if (onlyCheckUrlStartsWithExpectedText)
 			{
-				isUrlCorrect = Driver.Url.StartsWith(HomeUrl);
+				isUrlCorrect = Driver.Url.StartsWith(PageUrl);
 			}
 			else
 			{
-				isUrlCorrect = Driver.Url == HomeUrl;
+				isUrlCorrect = Driver.Url == PageUrl;
 			}
 
 			bool pageHasLoaded = isUrlCorrect && (Driver.Title == title);

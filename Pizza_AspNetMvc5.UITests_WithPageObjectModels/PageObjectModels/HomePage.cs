@@ -3,16 +3,15 @@ using System;
 
 namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 {
-	public class HomePage
+	public class HomePage : Page
 	{
-		private readonly IWebDriver Driver;
-		private const string HomeUrl = "https://localhost:44303/";
-		private const string HomeTitle = "Home - My Pizzerias App";
-
 		public HomePage(IWebDriver driver)
 		{
 			Driver = driver;
 		}
+
+		protected override string PageUrl => "https://localhost:44303/";
+		protected override string PageTitle => "Home - My Pizzerias App";
 
 		// public string exampleToken => Driver.FindElement(By.XPath("exampleXpath")).Text;
 		// public bool isCookieMessagePreent => Driver.FindElement(By.XPath("exampleXpath")).Any();
@@ -34,11 +33,11 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels
 
 			if (onlyCheckUrlStartsWithExpectedText)
 			{
-				isUrlCorrect = Driver.Url.StartsWith(HomeUrl);
+				isUrlCorrect = Driver.Url.StartsWith(PageUrl);
 			}
 			else
 			{
-				isUrlCorrect = Driver.Url == HomeUrl;
+				isUrlCorrect = Driver.Url == PageUrl;
 			}
 
 			bool pageHasLoaded = isUrlCorrect && (Driver.Title == title);

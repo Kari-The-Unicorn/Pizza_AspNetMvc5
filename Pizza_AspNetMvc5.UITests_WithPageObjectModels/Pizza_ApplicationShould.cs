@@ -1,8 +1,7 @@
-﻿using System;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Pizza_AspNetMvc5.UITests_WithPageObjectModels.PageObjectModels;
+using System;
 using Xunit;
 
 namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
@@ -31,68 +30,72 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 		[Fact]
 		public void SeeAllPizzeriasFromHomePage()
 		{
-				HomePage homePage = new HomePage(ChromeDriverFixture.Driver);
-				homePage.NavigateTo(HomeUrl, HomeTitle);
-				// Minimize browser window to prevent from accidential clicks
-				ChromeDriverFixture.Driver.Manage().Window.Minimize();
-				// TestHelper.Pause();
-				// IWebElement seeAllPizzeriasLink = driver.FindElement(By.Name("SeeAllPizzerias"));
+			HomePage homePage = new HomePage(ChromeDriverFixture.Driver);
+			homePage.NavigateTo(HomeUrl, HomeTitle);
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			// TestHelper.Pause();
+			// IWebElement seeAllPizzeriasLink = driver.FindElement(By.Name("SeeAllPizzerias"));
 
-				// Better option (waits until 1 sec but it's not fixed time, proceeds when element loaded before that time):
-				WebDriverWait wait = new WebDriverWait(ChromeDriverFixture.Driver, TimeSpan.FromSeconds(1));
-				// IWebElement seeAllPizzeriasLink = wait.Until((d)=> d.FindElement(By.Name("SeeAllPizzerias")));
-				IWebElement seeAllPizzeriasLink = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Name("SeeAllPizzerias")));
-				seeAllPizzeriasLink.Click();
-				TestHelper.Pause();
+			// Better option (waits until 1 sec but it's not fixed time, proceeds when element loaded before that time):
+			WebDriverWait wait = new WebDriverWait(ChromeDriverFixture.Driver, TimeSpan.FromSeconds(1));
+			// IWebElement seeAllPizzeriasLink = wait.Until((d)=> d.FindElement(By.Name("SeeAllPizzerias")));
+			IWebElement seeAllPizzeriasLink = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Name("SeeAllPizzerias")));
+			seeAllPizzeriasLink.Click();
+			TestHelper.Pause();
+			// Another option - Use Javascript to click:
+			// string script = @"document.evaluate('//a[text()[contains(.,'All')]]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();";
+			// IJavaScriptExecutor js = (IJavaScriptExecutor)ChromeDriverFixture.Driver;
+			// js.ExecuteScript(script, null);
 
-				Assert.Equal(PizzeriasTitle, ChromeDriverFixture.Driver.Title); 
-				Assert.Equal(PizzeriasUrl, ChromeDriverFixture.Driver.Url);
+			Assert.Equal(PizzeriasTitle, ChromeDriverFixture.Driver.Title);
+			Assert.Equal(PizzeriasUrl, ChromeDriverFixture.Driver.Url);
 		}
 
 		[Fact]
 		public void SeeAllPizzeriasFromHomePageLogo()
 		{
-				HomePage homePage = new HomePage(ChromeDriverFixture.Driver);
-				homePage.NavigateTo(HomeUrl, HomeTitle);
-				// Minimize browser window to prevent from accidential clicks
-				ChromeDriverFixture.Driver.Manage().Window.Minimize();
-				TestHelper.Pause();
+			HomePage homePage = new HomePage(ChromeDriverFixture.Driver);
+			homePage.NavigateTo(HomeUrl, HomeTitle);
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
 
-				ApplicationPage applicationPage = homePage.AllPizzeriasLinkClick();
+			ApplicationPage applicationPage = homePage.AllPizzeriasLinkClick();
 
-				applicationPage.EnsureHomePageLoaded(PizzeriasTitle);
+			applicationPage.EnsureHomePageLoaded(PizzeriasTitle);
 		}
 
 		[Fact]
 		public void SeeCreateNewPizzeriaFromPizzeriasPage()
 		{
-				ChromeDriverFixture.Driver.Navigate().GoToUrl(PizzeriasUrl);
-				// Minimize browser window to prevent from accidential clicks
-				ChromeDriverFixture.Driver.Manage().Window.Minimize();
-				TestHelper.Pause();
+			ChromeDriverFixture.Driver.Navigate().GoToUrl(PizzeriasUrl);
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
 
-				IWebElement createNewPizzeriaLink = ChromeDriverFixture.Driver.FindElement(By.LinkText("Add New"));
-				createNewPizzeriaLink.Click();
-				TestHelper.Pause();
+			IWebElement createNewPizzeriaLink = ChromeDriverFixture.Driver.FindElement(By.LinkText("Add New"));
+			createNewPizzeriaLink.Click();
+			TestHelper.Pause();
 
-				Assert.Equal(CreateNewTitle, ChromeDriverFixture.Driver.Title);
-				Assert.Equal(CreateNewUrl, ChromeDriverFixture.Driver.Url);
+			Assert.Equal(CreateNewTitle, ChromeDriverFixture.Driver.Title);
+			Assert.Equal(CreateNewUrl, ChromeDriverFixture.Driver.Url);
 		}
 
 		[Fact]
 		public void SeeCreateNewPizzeriaFromPizzeriasPage_UsingXPath()
 		{
-				ChromeDriverFixture.Driver.Navigate().GoToUrl(PizzeriasUrl);
-				// Minimize browser window to prevent from accidential clicks
-				ChromeDriverFixture.Driver.Manage().Window.Minimize();
-				TestHelper.Pause();
+			ChromeDriverFixture.Driver.Navigate().GoToUrl(PizzeriasUrl);
+			// Minimize browser window to prevent from accidential clicks
+			ChromeDriverFixture.Driver.Manage().Window.Minimize();
+			TestHelper.Pause();
 
-				IWebElement createNewPizzeriaLink = ChromeDriverFixture.Driver.FindElement(By.XPath("//p/a[contains(text(),'Add New')]"));
-				createNewPizzeriaLink.Click();
-				TestHelper.Pause();
+			IWebElement createNewPizzeriaLink = ChromeDriverFixture.Driver.FindElement(By.XPath("//p/a[contains(text(),'Add New')]"));
+			createNewPizzeriaLink.Click();
+			TestHelper.Pause();
 
-				Assert.Equal(CreateNewTitle, ChromeDriverFixture.Driver.Title);
-				Assert.Equal(CreateNewUrl, ChromeDriverFixture.Driver.Url);
+			Assert.Equal(CreateNewTitle, ChromeDriverFixture.Driver.Title);
+			Assert.Equal(CreateNewUrl, ChromeDriverFixture.Driver.Url);
 		}
 
 		[Fact]
@@ -101,21 +104,21 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 			const string newName = "Pizzeria";
 			const string newLocation = "La Mano";
 			const string newType = "Turkish";
-			
+
 			ApplicationPage homePage = new ApplicationPage(ChromeDriverFixture.Driver);
 			homePage.NavigateTo(CreateNewUrl, CreateNewTitle);
-			
+
 			homePage.EnterName(newName);
 			homePage.EnterLocation(newLocation);
 			homePage.EnterType(newType);
-			
+
 			ApplicationCompletePage applicationCompletePage = homePage.CreateNew();
-			
+
 			applicationCompletePage.EnsureHomePageLoaded(DetailsOfNewTitle);
 			Assert.Equal($"Details for {newName}", applicationCompletePage.MainName);
 			Assert.Equal($"{newName}", applicationCompletePage.Name);
 			Assert.Equal(newLocation, applicationCompletePage.Location);
-			Assert.Equal(newType, applicationCompletePage.Type); 
+			Assert.Equal(newType, applicationCompletePage.Type);
 		}
 
 		[Fact]
@@ -125,15 +128,15 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 			const string invalidLocation = "";
 			const string validLocation = "La Mano";
 			const string newType = "Turkish";
-			
+
 			ApplicationPage applicationPage = new ApplicationPage(ChromeDriverFixture.Driver);
 			applicationPage.NavigateTo(CreateNewUrl, CreateNewTitle);
-			
+
 			applicationPage.EnterName(newName);
 			// Don't enter location
 			applicationPage.EnterLocation(invalidLocation);
 			applicationPage.EnterType(newType);
-			
+
 			// Submit form
 			ApplicationCompletePage applicationCompletePage = applicationPage.CreateNew();
 

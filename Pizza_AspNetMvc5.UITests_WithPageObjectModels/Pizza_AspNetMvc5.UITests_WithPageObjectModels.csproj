@@ -120,6 +120,7 @@
     <Compile Include="PageObjectModels\ApplicationCompletePage.cs" />
     <Compile Include="PageObjectModels\ApplicationPage.cs" />
     <Compile Include="PageObjectModels\HomePage.cs" />
+    <Compile Include="PageObjectModels\Page.cs" />
     <Compile Include="Pizza_ApplicationShould.cs" />
     <Compile Include="Pizza_WebAppShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
