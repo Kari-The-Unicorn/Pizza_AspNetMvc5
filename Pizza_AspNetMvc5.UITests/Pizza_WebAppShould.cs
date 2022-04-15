@@ -1,14 +1,12 @@
-﻿using System;
-using System.IO;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using ApprovalTests.Reporters.Windows;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Html5;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using System;
+using System.IO;
 using Xunit;
 
 namespace Pizza_AspNetMvc5.UITests
@@ -24,7 +22,7 @@ namespace Pizza_AspNetMvc5.UITests
 		private const string HomeTitle = "Home - My Pizzerias App";
 
 		// If loads without error
-		[Fact] 
+		[Fact]
 		public void LoadHomePage()
 		{
 			using (IWebDriver driver = new ChromeDriver())
@@ -41,7 +39,7 @@ namespace Pizza_AspNetMvc5.UITests
 		}
 
 		// If reloads without error
-		[Fact] 
+		[Fact]
 		public void ReloadHomePage()
 		{
 			using (IWebDriver driver = new ChromeDriver())

@@ -19,7 +19,6 @@ namespace Pizza_AspNetMvc5.UITests_WithPageObjectModels
 		private const string PizzeriasUrl = "https://localhost:44303/Pizzerias";
 		private const string CreateUrl = "https://localhost:44303/Pizzerias/Create";
 		private const string PizzeriasTitle = "Index - My Pizzerias App";
-		// private const string HomeTitle = "Home - My Pizzerias App";
 
 		private readonly ChromeDriverFixture ChromeDriverFixture;
 
